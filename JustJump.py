@@ -1,5 +1,5 @@
 # This is created by Edina Berkes and Pál Matolay.
-# Py_Game1.3
+# Py_Game1.4
 
 import curses
 import time
@@ -20,14 +20,19 @@ def main(scr):
     barriery, barrierx = 5, 79
     PLAYER = "•"
     playerY, playerX = 5, 5
+    score = 0
 
     while True:
+        if True:
+            score += 1
+        win.addstr(8, 79, str(score))
+        win.refresh()
         win.clear()
         # Player movement(display, move)
         win.addstr(playerY, playerX, PLAYER)
         win.refresh()
         event = win.getch()
-        title = ' Just Jump! [Beta] '
+        title = ' Just Jump! [Beta] ||| Socre: '+str(score)
         win.addstr(0, (curses.COLS - len(title)) // 2, title)
         if event == ord("q"):
             break
@@ -71,7 +76,9 @@ def main(scr):
         if barrierx == 0:
             barrierx = 79
         time.sleep(0.03)
+
         if (playerY == 5 and playerX == barrierx):
+            # win.addstr(0, 0, "GameOver")
             break
 
 curses.wrapper(main)
