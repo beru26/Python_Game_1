@@ -21,19 +21,25 @@ def main(scr):
     PLAYER = "•"
     playerY, playerX = 5, 5
     score = 0
+    ground = "'" * 80
+    grond_y, ground_x = 6, 0
+    title = ' Just Jump! [Beta] ||| Socre: '
+    title_x = int((80 - len(title)) / 2)
+    ins = "You jump with space, but if you jump too often you won't get score."
 
     while True:
         if True:
             score += 1
-        win.addstr(8, 79, str(score))
         win.refresh()
         win.clear()
         # Player movement(display, move)
         win.addstr(playerY, playerX, PLAYER)
         win.refresh()
         event = win.getch()
-        title = ' Just Jump! [Beta] ||| Socre: '+str(score)
-        win.addstr(0, (curses.COLS - len(title)) // 2, title)
+        win.addstr(0, title_x, title)
+        win.addstr(0, title_x+30, str(score))
+        win.addstr(grond_y, ground_x, ground)
+        win.addstr(7, 0, ins)
         if event == ord("q"):
             break
         elif event == ord(" "):
@@ -47,6 +53,7 @@ def main(scr):
                 win.addstr(barriery, barrierx, " ")
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
+                # win.addstr(barriery, barrierx - 30, BARRIER)
                 win.refresh()
                 if barrierx == 0:
                     barrierx = 79
@@ -62,6 +69,7 @@ def main(scr):
                 win.addstr(barriery, barrierx, " ")
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
+                # win.addstr(barriery, x, BARRIER)
                 win.refresh()
                 if barrierx == 0:
                     barrierx = 79
@@ -72,6 +80,7 @@ def main(scr):
 # Barrier movement
         barrierx += -1
         win.addstr(barriery, barrierx, BARRIER)
+        # win.addstr(barriery, barrierx - 30, BARRIER)
         win.refresh()
         if barrierx == 0:
             barrierx = 79
