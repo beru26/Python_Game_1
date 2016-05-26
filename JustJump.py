@@ -1,9 +1,24 @@
 # This is created by Edina Berkes and Pál Matolay.
-# Py_Game1.4
+# Py_Game1.6
 
 import curses
 import time
 import random
+
+
+def barrier_return(barrierx, s):
+    # if s > 90:
+    #     speed = 0.0005
+    # if s >= 60:
+    #     speed = 0.0001
+    if s >= 1000:
+        speed = 0.01
+    else:
+        speed = 0.015
+    if barrierx == 0:
+        barrierx = 79
+    time.sleep(speed)
+    return barrierx, s
 
 
 def main(scr):
@@ -16,16 +31,18 @@ def main(scr):
     win.nodelay(1)
     win.refresh()
 
-    BARRIER = "Ψ"
+    BARRIER = "█"
     barriery, barrierx = 5, 79
-    PLAYER = "•"
+    PLAYER = "©"
     playerY, playerX = 5, 5
     score = 0
-    ground = "'" * 80
+    ground = "░" * 80
     grond_y, ground_x = 6, 0
-    title = ' Just Jump! [Beta] ||| Socre: '
+    title = ' - - - - Just Jump! 2000© [2.0] ||| Score:     - - - - -'
     title_x = int((80 - len(title)) / 2)
-    ins = "You jump with space, but if you jump too often you won't get score."
+    ins = """ You jump with space, but if you jump too often you won't get score.
+ If you can't dodge the barrier you lost!
+ PRESS [ q ] TO QUIT."""
 
     while True:
         if True:
@@ -37,7 +54,7 @@ def main(scr):
         win.refresh()
         event = win.getch()
         win.addstr(0, title_x, title)
-        win.addstr(0, title_x+30, str(score))
+        win.addstr(0, title_x + 43, str(score))
         win.addstr(grond_y, ground_x, ground)
         win.addstr(7, 0, ins)
         if event == ord("q"):
@@ -53,38 +70,29 @@ def main(scr):
                 win.addstr(barriery, barrierx, " ")
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
-                # win.addstr(barriery, barrierx - 30, BARRIER)
                 win.refresh()
-                if barrierx == 0:
-                    barrierx = 79
-                time.sleep(0.03)
+                barrierx, score = barrier_return(barrierx, score)
                 n = n + 1
 
             # Fall
-            while n > 4 and n < 10:
+            while n > 3 and n < 10:
                 win.addstr(playerY, playerX, " ")
                 playerY += 1
-                win.addstr(playerY, playerX, PLAYER)
                 win.getch()
                 win.addstr(barriery, barrierx, " ")
+                win.addstr(playerY, playerX, PLAYER)
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
-                # win.addstr(barriery, x, BARRIER)
                 win.refresh()
-                if barrierx == 0:
-                    barrierx = 79
-                time.sleep(0.03)
+                barrierx, score = barrier_return(barrierx, score)
                 n = n + 1
 
 
 # Barrier movement
         barrierx += -1
         win.addstr(barriery, barrierx, BARRIER)
-        # win.addstr(barriery, barrierx - 30, BARRIER)
         win.refresh()
-        if barrierx == 0:
-            barrierx = 79
-        time.sleep(0.03)
+        barrierx, score = barrier_return(barrierx, score)
 
         if (playerY == 5 and playerX == barrierx):
             # win.addstr(0, 0, "GameOver")
