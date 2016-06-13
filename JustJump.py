@@ -10,10 +10,12 @@ def speed_setting(barrierx, s):
     speed = 0.03
     if barrierx == 0:
         barrierx = 79
-    # elif s > 100 and s < 300:
-    #     speed = 0.02
-    # elif s > 300:
-    #     speed = 0.01
+    elif s > 100 and s < 300:
+        speed = 0.02
+    elif s > 300 and s < 600:
+        speed = 0.015
+    elif s > 600:
+        speed = 0.01
     time.sleep(speed)
     return barrierx, s
 
@@ -35,7 +37,7 @@ def main(scr):
     score = 0
     ground = "░" * 80
     grond_y, ground_x = 6, 0
-    title = ' - - - - Just Jump! 2000© [2.0] ||| Score:     - - - - -'
+    title = ' - - - - Just Jump! 2000© [3.0] ||| Score:     - - - - -'
     title_x = int((80 - len(title)) / 2)
     ins = """ You jump with space, but if you jump too often you won't get score.
  If you can't dodge the barrier you lost!
@@ -63,7 +65,6 @@ def main(scr):
                 win.addstr(playerY, playerX, " ")
                 playerY += -1
                 win.addstr(playerY, playerX, PLAYER)
-                win.getch()
                 win.addstr(barriery, barrierx, " ")
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
@@ -75,7 +76,6 @@ def main(scr):
             while n > 3 and n < 10:
                 win.addstr(playerY, playerX, " ")
                 playerY += 1
-                win.getch()
                 win.addstr(barriery, barrierx, " ")
                 win.addstr(playerY, playerX, PLAYER)
                 barrierx += -1
