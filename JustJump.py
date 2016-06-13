@@ -1,6 +1,3 @@
-# This is created by Edina Berkes and Pál Matolay.
-# Py_Game1.6
-
 import curses
 import time
 import random
