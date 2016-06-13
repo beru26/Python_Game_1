@@ -6,17 +6,14 @@ import time
 import random
 
 
-def barrier_return(barrierx, s):
-    # if s > 90:
-    #     speed = 0.0005
-    # if s >= 60:
-    #     speed = 0.0001
-    if s >= 1000:
-        speed = 0.01
-    else:
-        speed = 0.015
+def speed_setting(barrierx, s):
+    speed = 0.03
     if barrierx == 0:
         barrierx = 79
+    # elif s > 100 and s < 300:
+    #     speed = 0.02
+    # elif s > 300:
+    #     speed = 0.01
     time.sleep(speed)
     return barrierx, s
 
@@ -71,7 +68,7 @@ def main(scr):
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
                 win.refresh()
-                barrierx, score = barrier_return(barrierx, score)
+                barrierx, score = speed_setting(barrierx, score)
                 n = n + 1
 
             # Fall
@@ -84,7 +81,7 @@ def main(scr):
                 barrierx += -1
                 win.addstr(barriery, barrierx, BARRIER)
                 win.refresh()
-                barrierx, score = barrier_return(barrierx, score)
+                barrierx, score = speed_setting(barrierx, score)
                 n = n + 1
 
 
@@ -92,10 +89,9 @@ def main(scr):
         barrierx += -1
         win.addstr(barriery, barrierx, BARRIER)
         win.refresh()
-        barrierx, score = barrier_return(barrierx, score)
+        barrierx, score = speed_setting(barrierx, score)
 
         if (playerY == 5 and playerX == barrierx):
-            # win.addstr(0, 0, "GameOver")
             break
 
 curses.wrapper(main)
